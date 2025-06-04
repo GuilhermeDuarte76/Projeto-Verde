@@ -62,9 +62,7 @@ const HomePage = () => {
   ]
 
   return (
-    <>
-      <Header />
-      
+    <>      
       <div className="main-content">
         <WelcomeSection />
 

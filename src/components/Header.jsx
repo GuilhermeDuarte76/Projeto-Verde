@@ -1,10 +1,20 @@
 import React from 'react'
 import { Button, Avatar, Dropdown } from 'antd'
-import { LogoutOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons'
+import { 
+  LogoutOutlined, 
+  UserOutlined, 
+  SettingOutlined,
+  MenuOutlined,
+  MenuFoldOutlined
+} from '@ant-design/icons'
 import { useAuth } from '../hooks/useAuth'
+import { useSidebar } from '../hooks/useSidebar'
+import { useWindowSize } from '../hooks/useWindowSize'
 
 const Header = () => {
   const { user, logout } = useAuth()
+  const { isOpen, toggleSidebar } = useSidebar()
+  const { isMobile } = useWindowSize()
 
   const menuItems = [
     {
@@ -32,11 +42,26 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
-        <div className="logo">
-          <span className="logo-icon">🌱</span>
-          <span className="logo-text">Site Verde</span>
+        {/* Botão do Menu - Lado Esquerdo */}
+        <div className="header-left">
+          <Button
+            type="text"
+            icon={isOpen && !isMobile ? <MenuFoldOutlined /> : <MenuOutlined />}
+            onClick={toggleSidebar}
+            className="menu-toggle-btn"
+            size="large"
+          />
+          
+          {/* Logo para mobile quando sidebar fechada */}
+          {(isMobile || !isOpen) && (
+            <div className="header-logo-mobile">
+              <span className="logo-icon">🌱</span>
+              <span className="logo-text">Site Verde</span>
+            </div>
+          )}
         </div>
         
+        {/* Seção do Usuário - Lado Direito */}
         {user && (
           <div className="user-section">
             <span className="welcome-text">

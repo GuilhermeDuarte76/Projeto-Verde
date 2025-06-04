@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Spin, message } from 'antd'
 import { AppRoutes } from './routes/AppRoutes'
 import { AuthProvider } from './hooks/useAuth'
+import MainLayout from './components/MainLayout'
 import './scrollReveal.js'
 
 function App() {
