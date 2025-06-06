@@ -96,8 +96,8 @@ const LoginPage = () => {
 
           <div className="login-demo">
             <Text type="secondary">
-              <strong>Credenciais de teste:</strong><br/>
-              Usuário: <code>admin</code><br/>
+              <strong>Credenciais de teste:</strong><br />
+              Usuário: <code>admin</code><br />
               Senha: <code>123456</code>
             </Text>
           </div>

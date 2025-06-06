@@ -21,8 +21,9 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  z-index: 0; /* Ajuste o z-index para 0 ou 1, desde que seja menor que o do card */
-  opacity: 0.6; /* Opcional: Adiciona uma leve transparência ao SVG sobre o gradiente */
+  z-index: 0; /* Ajuste o z-index para 0 ou 1, menor que o do card */
+  /* Opacidade geral removida para cores mais marcantes */
+  /* opacity: 0.6; */
 }
 
 /* Estilos para o SVG/imagem dentro do container */
@@ -33,6 +34,56 @@
   object-fit: cover; /* Garante que a imagem cubra todo o container */
   object-position: center; /* Centraliza a imagem */
 }
+
+/* ===== ANIMAÇÕES ===== */
+
+/* Animação de Vagalume (Piscar) */
+@keyframes blink {
+    0%, 100% { opacity: 0; } /* Invisível no início e fim */
+    50% { opacity: 1; }      /* Totalmente visível no meio */
+}
+
+/* Animação de Crescimento da Planta (Escala Vertical) */
+@keyframes grow {
+    0% { transform: scaleY(0); opacity: 0; } /* Começa sem altura e invisível */
+    50% { transform: scaleY(1); opacity: 1; } /* Cresce e fica visível */
+    100% { transform: scaleY(1); opacity: 1; } /* Mantém o estado final */
+}
+
+/* Animação de Florescimento (Escala e Opacidade) */
+@keyframes bloom {
+    0% { transform: scale(0); opacity: 0; } /* Começa sem tamanho e invisível */
+    50% { transform: scale(0.8); opacity: 0.8; } /* Cresce um pouco */
+    100% { transform: scale(1); opacity: 1; } /* Fica no tamanho final e totalmente visível */
+}
+
+
+/* ===== APLICAÇÃO DAS ANIMAÇÕES ===== */
+
+/* Aplica a animação aos vagalumes dentro do SVG */
+.login-background-animation .vagalume {
+    animation: blink 2s ease-in-out infinite; /* Animação de 2s, suave, infinita */
+    /* animation-delay é definido inline no SVG para maior variedade */
+}
+
+/* Aplica a animação de crescimento aos caules das plantas */
+.login-background-animation .plant-stem {
+    animation: grow 1.5s ease-out forwards; /* Animação de 1.5s, suave, mantém estado final */
+    /* animation-delay é definido inline no SVG */
+}
+
+/* Aplica a animação de florescimento às pétalas */
+.login-background-animation .flower-petal {
+    animation: bloom 1s ease-out forwards; /* Animação de 1s, suave, mantém estado final */
+    /* animation-delay é definido inline no SVG */
+}
+
+/* Aplica a animação de florescimento ao centro das flores */
+.login-background-animation .flower-center {
+    animation: bloom 1s ease-out forwards; /* Animação de 1s, suave, mantém estado final */
+    /* animation-delay é definido inline no SVG */
+}
+
 
 /* Você pode adicionar mais estilos CSS aqui para animar elementos específicos do SVG
    se a animação não estiver embutida diretamente no SVG ou usando keyframes internos. */
