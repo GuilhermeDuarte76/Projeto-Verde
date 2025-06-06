@@ -13,7 +13,7 @@ import ProtectedRoute from './ProtectedRoute'
 
 export const AppRoutes = () => {
   const { user } = useAuth()
-
+ 
   return (
     <Routes>
       <Route 

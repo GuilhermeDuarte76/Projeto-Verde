@@ -1,0 +1,42 @@
+<svg viewBox="0 0 1440 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+  <style>
+    /* Defina suas animações CSS aqui, se preferir */
+    .folha {
+      fill: #228B22; /* Verde Folha */
+      opacity: 0.8;
+      /* Exemplo de animação simples */
+      animation: float 6s ease-in-out infinite;
+    }
+    .linha-plantacao {
+      fill: none;
+      stroke: #556B2F; /* Verde Musgo */
+      stroke-width: 2;
+      opacity: 0.5;
+      /* Exemplo de animação de movimento */
+      animation: wave 8s linear infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+    @keyframes wave {
+       0% { stroke-dashoffset: 0; }
+       100% { stroke-dashoffset: 1000; } /* Ajuste conforme o path */
+    }
+  </style>
+
+  <!-- REMOVA ESTA LINHA: <rect width="100%" height="100%" fill="#F8F8FF"/> -->
+
+  <!-- Exemplo de linhas de plantação -->
+  <path class="linha-plantacao" d="M0 400 Q 360 300 720 400 T 1440 400" stroke-dasharray="200 100"/>
+  <path class="linha-plantacao" d="M0 450 Q 360 350 720 450 T 1440 450" stroke-dasharray="250 150"/>
+  <path class="linha-plantacao" d="M0 500 Q 360 400 720 500 T 1440 500" stroke-dasharray="300 200"/>
+
+  <!-- Exemplo de folhas flutuantes -->
+  <circle class="folha" cx="200" cy="100" r="10"/>
+  <circle class="folha" cx="500" cy="50" r="12" style="animation-delay: 1s;"/>
+  <circle class="folha" cx="800" cy="150" r="8" style="animation-delay: 2s;"/>
+  <circle class="folha" cx="1100" cy="80" r="15" style="animation-delay: 0.5s;"/>
+
+  <!-- Adicione seus elementos agrícolas e animações aqui -->
+</svg>

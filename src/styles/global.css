@@ -1,3 +1,8 @@
+/* Importe os arquivos de estilos específicos */
+@import './login.css'; /* Estilos para a tela de login */
+/* @import './sidebar.css'; */ /* Se você criar um arquivo separado para a sidebar, importe aqui */
+
+
 :root {
   --verde-musgo: #556B2F;
   --verde-folha: #228B22;
@@ -13,7 +18,7 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, var(--branco-gelo) 0%, #f0f8f0 100%);
+  background: linear-gradient(135deg, var(--branco-gelo) 0%, #f0f8f0 100%); /* Fundo padrão do body */
   min-height: 100vh;
   line-height: 1.6;
 }
@@ -23,6 +28,39 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+/* ===== LAYOUT PRINCIPAL ===== */
+.main-layout {
+  min-height: 100vh;
+}
+
+.content-layout {
+  position: relative;
+  display: flex; /* Adiciona display flex para layout lado a lado */
+  flex: 1; /* Permite que o layout de conteúdo ocupe o espaço restante */
+}
+
+.main-content-wrapper {
+  flex: 1; /* Permite que o wrapper do conteúdo principal ocupe o espaço restante */
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--branco-gelo) 0%, #f0f8f0 100%);
+  min-height: calc(100vh - 80px); /* Altura ajustada considerando o header */
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Transição para o margin-left */
+  width: 100%; /* Garante que o wrapper ocupe a largura total */
+  overflow-x: hidden; /* Evita scroll horizontal indesejado */
+}
+
+.main-content-wrapper.mobile {
+  padding: 1rem;
+  margin-left: 0 !important; /* Garante que não haja margin-left em mobile */
+}
+
+.main-content {
+  max-width: 1200px; /* Limita a largura do conteúdo dentro do wrapper */
+  margin: 0 auto; /* Centraliza o conteúdo */
+  width: 100%;
+}
+
 
 /* Loading Container */
 .loading-container {
@@ -37,20 +75,56 @@ body {
 /* Header Styles */
 .header {
   background: linear-gradient(90deg, var(--verde-musgo), var(--verde-folha));
-  padding: 1rem 2rem;
+  padding: 0 2rem; /* Ajuste padding para acomodar botão do menu */
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 100;
+  height: 80px; /* Altura fixa para o header */
+  display: flex;
+  align-items: center;
 }
 
 .header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1200px; /* Limita a largura do conteúdo do header */
+  margin: 0 auto; /* Centraliza o conteúdo do header */
+  width: 100%;
 }
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.menu-toggle-btn {
+  color: white !important;
+  border: none !important;
+  background: transparent !important;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.menu-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.05);
+}
+
+.header-logo-mobile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 
 .logo {
   display: flex;
@@ -76,33 +150,230 @@ body {
   margin-right: 1rem;
 }
 
-/* Main Content */
-.main-content {
+/* Main Content (Original - agora dentro de .main-content-wrapper > .main-content) */
+/* .main-content {
   flex: 1;
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-}
+} */
 
-/* Login Page */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, var(--verde-folha) 0%, var(--verde-musgo) 100%);
-  padding: 1rem;
-}
 
-.login-card {
+/* ===== SIDEBAR DESKTOP ===== */
+.sidebar-desktop {
+  position: fixed; /* Fixo na tela */
+  left: 0;
+  top: 80px; /* Abaixo do header */
+  height: calc(100vh - 80px); /* Altura total menos o header */
+  width: 320px;
   background: white;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+  transform: translateX(-100%); /* Começa escondida */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 99; /* Acima do conteúdo principal, abaixo do header */
+  overflow-y: auto; /* Adiciona scroll se o conteúdo for grande */
+  flex-shrink: 0; /* Impede que a sidebar encolha */
+}
+
+.sidebar-desktop.sidebar-open {
+  transform: translateX(0); /* Fica visível */
+}
+
+/* Adiciona um margin-left ao conteúdo principal quando a sidebar está aberta no desktop */
+.sidebar-desktop.sidebar-open ~ .main-content-wrapper {
+  margin-left: 320px;
+}
+
+/* ===== CONTEÚDO DA SIDEBAR ===== */
+.sidebar-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sidebar-logo-icon {
+  font-size: 1.8rem;
+}
+
+.sidebar-logo-text {
+  color: var(--verde-musgo) !important;
+  margin: 0 !important;
+  font-size: 1.3rem !important;
+}
+
+.sidebar-close-btn {
+  font-size: 1.2rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+
+.sidebar-close-btn:hover {
+  background: #f5f5f5;
+  color: var(--verde-folha);
+}
+
+/* ===== INFORMAÇÕES DO USUÁRIO ===== */
+.sidebar-user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8fff8, #f0f8f0);
+  border-radius: 12px;
+  border: 1px solid #e8f5e8;
+}
+
+.sidebar-avatar {
+  flex-shrink: 0;
+}
+
+.sidebar-user-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Permite que o texto seja truncado */
+}
+
+.sidebar-user-name {
+  color: var(--verde-musgo) !important;
+  font-size: 1rem !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user-email {
+  font-size: 0.85rem !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== MENU DE NAVEGAÇÃO ===== */
+.sidebar-menu {
+  flex: 1; /* Ocupa o espaço restante */
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-section-title {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1rem !important;
+  color: #999 !important;
+}
+
+.sidebar-navigation-menu {
+  background: transparent !important;
+}
+
+.sidebar-navigation-menu .ant-menu-item {
+  border-radius: 8px !important;
+  margin-bottom: 4px !important;
+  padding: 8px 12px !important;
+  height: auto !important;
+  line-height: 1.4 !important;
+}
+
+.sidebar-navigation-menu .ant-menu-item:hover {
+  background: linear-gradient(135deg, #f0f8f0, #e8f5e8) !important;
+  color: var(--verde-musgo) !important;
+}
+
+.sidebar-navigation-menu .ant-menu-item-selected {
+  background: linear-gradient(135deg, var(--verde-folha), var(--verde-musgo)) !important;
+  color: white !important;
+}
+
+.sidebar-navigation-menu .ant-menu-item-selected:hover {
+  background: linear-gradient(135deg, var(--verde-musgo), var(--verde-folha)) !important;
+}
+
+.menu-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.menu-description {
+  font-size: 0.75rem !important;
+  opacity: 0.8;
+}
+
+.sidebar-navigation-menu .ant-menu-item-selected .menu-description {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ===== FOOTER DA SIDEBAR ===== */
+.sidebar-footer {
+  margin-top: auto; /* Empurra para o final */
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+  text-align: center;
+}
+
+.sidebar-version,
+.sidebar-copyright {
+  display: block;
+  font-size: 0.75rem !important;
+  line-height: 1.4;
+}
+
+.sidebar-copyright {
+  margin-top: 0.25rem;
+}
+
+/* ===== DRAWER MOBILE (Ant Design) ===== */
+/* Os estilos para o Drawer são aplicados à classe .sidebar-drawer no Sidebar.jsx */
+.sidebar-drawer .ant-drawer-body {
+  padding: 0;
+  background: white;
+}
+
+.sidebar-drawer .ant-drawer-header {
+  display: none; /* Remove o header padrão do Drawer */
+}
+
+
+/* Login Page (Ajustado para o novo layout e background) */
+/* O .login-page-wrapper agora tem o background e centraliza o conteúdo */
+/* Veja src/styles/login.css para os estilos do wrapper e background */
+
+.login-container {
+  /* Mantém os estilos do card de login */
+  background: white; /* Fundo branco para o card */
   padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   width: 100%;
   max-width: 400px;
   border: none;
+  position: relative; /* IMPORTANTE: Cria contexto de empilhamento para o z-index */
+  z-index: 2; /* Garante que o card fique acima do background (z-index 0 ou 1) */
 }
 
 .login-header {
@@ -122,6 +393,7 @@ body {
   background: #f8f9fa;
   border-radius: 8px;
 }
+
 
 /* Welcome Section */
 .welcome-section {
@@ -173,6 +445,10 @@ body {
 
 .stats-icon {
   font-size: 2rem;
+}
+
+.stats-info {
+  flex: 1; /* Permite que o info ocupe o espaço restante */
 }
 
 .stats-number {
@@ -248,363 +524,7 @@ body {
   text-align: center;
 }
 
-/* Ant Design Customizations */
-.ant-btn-primary {
-  background: var(--verde-folha);
-  border-color: var(--verde-folha);
-  font-weight: 500;
-}
-
-.ant-btn-primary:hover {
-  background: var(--verde-musgo) !important;
-  border-color: var(--verde-musgo) !important;
-}
-
-.ant-input:focus,
-.ant-input-focused {
-  border-color: var(--verde-folha);
-  box-shadow: 0 0 0 2px rgba(34, 139, 34, 0.2);
-}
-
-.ant-input-password:focus,
-.ant-input-password-focused {
-  border-color: var(--verde-folha);
-  box-shadow: 0 0 0 2px rgba(34, 139, 34, 0.2);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
-
-  .main-content {
-    padding: 1rem;
-  }
-
-  .welcome-title {
-    font-size: 2rem !important;
-  }
-
-  .welcome-section {
-    padding: 1.5rem;
-  }
-
-  .features-section {
-    padding: 1.5rem;
-  }
-
-  .user-section {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .login-card {
-    padding: 1.5rem;
-  }
-
-  .welcome-title {
-    font-size: 1.8rem !important;
-  }
-
-  .stats-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .stats-icon {
-    font-size: 1.5rem;
-  }
-
-  .feature-icon {
-    width: 48px;
-    height: 48px;
-    font-size: 1.2rem;
-  }
-}
-
-/* ScrollReveal Animations */
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.fade-in.revealed {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Utility Classes */
-.text-center { text-align: center; }
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-3 { margin-bottom: 1.5rem; }
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-
-/* ===== LAYOUT PRINCIPAL ===== */
-.main-layout {
-  min-height: 100vh;
-}
-
-.content-layout {
-  position: relative;
-}
-
-.main-content-wrapper {
-  padding: 2rem;
-  background: linear-gradient(135deg, var(--branco-gelo) 0%, #f0f8f0 100%);
-  min-height: calc(100vh - 80px);
-  transition: var(--transition);
-}
-
-.main-content-wrapper.mobile {
-  padding: 1rem;
-}
-
-/* ===== HEADER ATUALIZADO ===== */
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.menu-toggle-btn {
-  color: white !important;
-  border: none !important;
-  background: transparent !important;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition);
-}
-
-.menu-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  transform: scale(1.05);
-}
-
-.header-logo-mobile {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: white;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-/* ===== SIDEBAR DESKTOP ===== */
-.sidebar-desktop {
-  position: fixed;
-  left: 0;
-  top: 80px;
-  height: calc(100vh - 80px);
-  width: 320px;
-  background: white;
-  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-  transform: translateX(-100%);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 99;
-  overflow-y: auto;
-}
-
-.sidebar-desktop.sidebar-open {
-  transform: translateX(0);
-}
-
-.sidebar-desktop.sidebar-open ~ .main-content-wrapper {
-  margin-left: 320px;
-}
-
-/* ===== CONTEÚDO DA SIDEBAR ===== */
-.sidebar-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-}
-
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.sidebar-logo-icon {
-  font-size: 1.8rem;
-}
-
-.sidebar-logo-text {
-  color: var(--verde-musgo) !important;
-  margin: 0 !important;
-  font-size: 1.3rem !important;
-}
-
-.sidebar-close-btn {
-  font-size: 1.2rem;
-  color: #666;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 4px;
-  transition: var(--transition);
-}
-
-.sidebar-close-btn:hover {
-  background: #f5f5f5;
-  color: var(--verde-folha);
-}
-
-/* ===== INFORMAÇÕES DO USUÁRIO ===== */
-.sidebar-user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: linear-gradient(135deg, #f8fff8, #f0f8f0);
-  border-radius: 12px;
-  border: 1px solid #e8f5e8;
-}
-
-.sidebar-avatar {
-  flex-shrink: 0;
-}
-
-.sidebar-user-details {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
-.sidebar-user-name {
-  color: var(--verde-musgo) !important;
-  font-size: 1rem !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.sidebar-user-email {
-  font-size: 0.85rem !important;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* ===== MENU DE NAVEGAÇÃO ===== */
-.sidebar-menu {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-section-title {
-  font-size: 0.75rem !important;
-  font-weight: 600 !important;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 1rem !important;
-  color: #999 !important;
-}
-
-.sidebar-navigation-menu {
-  background: transparent !important;
-}
-
-.sidebar-navigation-menu .ant-menu-item {
-  border-radius: 8px !important;
-  margin-bottom: 4px !important;
-  padding: 8px 12px !important;
-  height: auto !important;
-  line-height: 1.4 !important;
-}
-
-.sidebar-navigation-menu .ant-menu-item:hover {
-  background: linear-gradient(135deg, #f0f8f0, #e8f5e8) !important;
-  color: var(--verde-musgo) !important;
-}
-
-.sidebar-navigation-menu .ant-menu-item-selected {
-  background: linear-gradient(135deg, var(--verde-folha), var(--verde-musgo)) !important;
-  color: white !important;
-}
-
-.sidebar-navigation-menu .ant-menu-item-selected:hover {
-  background: linear-gradient(135deg, var(--verde-musgo), var(--verde-folha)) !important;
-}
-
-.menu-item-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.menu-label {
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.menu-description {
-  font-size: 0.75rem !important;
-  opacity: 0.8;
-}
-
-.sidebar-navigation-menu .ant-menu-item-selected .menu-description {
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-/* ===== FOOTER DA SIDEBAR ===== */
-.sidebar-footer {
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid #f0f0f0;
-  text-align: center;
-}
-
-.sidebar-version,
-.sidebar-copyright {
-  display: block;
-  font-size: 0.75rem !important;
-  line-height: 1.4;
-}
-
-.sidebar-copyright {
-  margin-top: 0.25rem;
-}
-
-/* ===== DRAWER MOBILE ===== */
-.sidebar-drawer .ant-drawer-body {
-  padding: 0;
-  background: white;
-}
-
-.sidebar-drawer .ant-drawer-header {
-  display: none;
-}
-
-/* ===== PÁGINAS - HEADER ===== */
+/* Page Header Card (para as novas páginas) */
 .page-header-card {
   border: none !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.05) !important;
@@ -637,17 +557,91 @@ body {
   font-weight: 500;
 }
 
-/* ===== RESPONSIVIDADE ===== */
-@media (max-width: 1024px) {
-  .sidebar-desktop.sidebar-open ~ .main-content-wrapper {
-    margin-left: 0;
-  }
+
+/* Ant Design Customizations */
+.ant-btn-primary {
+  background: var(--verde-folha);
+  border-color: var(--verde-folha);
+  font-weight: 500;
 }
 
-@media (max-width: 768px) {
+.ant-btn-primary:hover {
+  background: var(--verde-musgo) !important;
+  border-color: var(--verde-musgo) !important;
+}
+
+.ant-input:focus,
+.ant-input-focused {
+  border-color: var(--verde-folha);
+  box-shadow: 0 0 0 2px rgba(34, 139, 34, 0.2);
+}
+
+.ant-input-password:focus,
+.ant-input-password-focused {
+  border-color: var(--verde-folha);
+  box-shadow: 0 0 0 2px rgba(34, 139, 34, 0.2);
+}
+
+/* Ant Design Menu Customizations (para a Sidebar) */
+/* Estilos específicos do menu da sidebar estão em .sidebar-navigation-menu */
+
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  /* Em telas menores que desktop, a sidebar fixa desaparece */
+  .sidebar-desktop {
+    transform: translateX(-100%) !important; /* Garante que esteja escondida */
+  }
+
+  /* Remove o margin-left do conteúdo principal em telas menores que desktop */
+  .main-content-wrapper {
+    margin-left: 0 !important;
+  }
+
+  /* Ajusta padding do header */
+  .header {
+    padding: 0 1rem;
+  }
+
+  .header-content {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  /* Ajusta padding do conteúdo principal */
   .main-content-wrapper {
     padding: 1rem;
   }
+}
+
+
+@media (max-width: 768px) {
+  .header-content {
+    /* flex-direction: column; */ /* Removido para manter logo e user na mesma linha */
+    gap: 1rem;
+    /* text-align: center; */ /* Removido */
+  }
+
+  .main-content-wrapper {
+    padding: 1rem;
+  }
+
+  .welcome-title {
+    font-size: 2rem !important;
+  }
+
+  .welcome-section {
+    padding: 1.5rem;
+  }
+
+  .features-section {
+    padding: 1.5rem;
+  }
+
+  /* .user-section {
+    flex-direction: column;
+    gap: 0.5rem;
+  } */ /* Removido para manter na mesma linha */
 
   .page-header-content {
     flex-direction: column;
@@ -663,22 +657,46 @@ body {
     font-size: 1.8rem !important;
   }
 
-  .sidebar-user-info {
-    padding: 0.75rem;
-  }
-
+  /* Ajustes para a sidebar mobile (Drawer) */
   .sidebar-content {
     padding: 1rem;
+  }
+
+  .sidebar-user-info {
+    padding: 0.75rem;
   }
 }
 
 @media (max-width: 480px) {
   .header-logo-mobile .logo-text {
-    display: none;
+    display: none; /* Esconde o texto do logo em telas muito pequenas */
   }
 
   .welcome-text {
-    display: none;
+    display: none; /* Esconde o texto "Olá, Guilherme!" em telas muito pequenas */
+  }
+
+  .login-card {
+    padding: 1.5rem;
+  }
+
+  .welcome-title {
+    font-size: 1.8rem !important;
+  }
+
+  .stats-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .stats-icon {
+    font-size: 1.5rem;
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
   }
 
   .page-title {
@@ -686,7 +704,8 @@ body {
   }
 }
 
-/* ===== ANIMAÇÕES ===== */
+/* ===== ANIMAÇÕES CSS (Exemplo) ===== */
+/* Estas animações podem ser usadas diretamente no SVG ou em elementos HTML */
 @keyframes slideInLeft {
   from {
     transform: translateX(-100%);
@@ -698,11 +717,14 @@ body {
   }
 }
 
-.sidebar-desktop.sidebar-open {
-  animation: slideInLeft 0.3s ease-out;
-}
+/* Exemplo de aplicação da animação em um elemento */
+/* .element-to-animate {
+  animation: slideInLeft 0.5s ease-out forwards;
+} */
+
 
 /* ===== SCROLLBAR CUSTOMIZADA ===== */
+/* Estilos para a scrollbar da sidebar desktop */
 .sidebar-desktop::-webkit-scrollbar {
   width: 6px;
 }
@@ -719,3 +741,35 @@ body {
 .sidebar-desktop::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+
+/* ScrollReveal Animations (Classes adicionadas pelo ScrollReveal.js) */
+/* Estas classes são aplicadas automaticamente pelo ScrollReveal */
+.sr .stats-card,
+.sr .features-section,
+.sr .feature-card,
+.sr .welcome-section,
+.sr .login-card,
+.sr .projects-header,
+.sr .projects-stats,
+.sr .projects-table,
+.sr .analytics-card,
+.sr .team-card,
+.sr .profile-card,
+.sr .settings-card,
+.sr .help-card,
+.sr .sidebar-header,
+.sr .sidebar-menu,
+.sr .sidebar-footer {
+  visibility: hidden; /* Esconde os elementos antes da animação */
+}
+
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }

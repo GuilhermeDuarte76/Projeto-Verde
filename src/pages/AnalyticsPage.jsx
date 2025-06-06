@@ -17,9 +17,14 @@ const AnalyticsPage = () => {
         Visualize dados e métricas importantes sobre o sistema.
       </Paragraph>
       <div style={{ marginTop: '2rem' }}>
-        <Paragraph>
-          Esta é a página de Relatórios e Análises. Conteúdo detalhado será adicionado aqui em breve.
-        </Paragraph>
+        <iframe
+          width="100%"
+          height="600"
+          src="https://app.powerbi.com/view?"
+          frameborder="0"
+          allowFullScreen="true"
+          >
+        </iframe>
       </div>
     </Card>
   );
